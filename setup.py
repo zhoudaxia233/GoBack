@@ -2,6 +2,7 @@ import os
 import sys
 import io
 import re
+import goback
 from setuptools import setup
 
 
@@ -12,12 +13,9 @@ if sys.argv[-1] == 'publish':
     os.system('rm -rf dist goback.egg-info')
     sys.exit()
 
-with io.open("goback/__init__.py", "rt", encoding="utf8") as f:
-    version = re.search(r"__version__ = \'(.*?)\'", f.read()).group(1)
-
 setup(
     name='goback',
-    version=version,
+    version=goback.__version__,
     description="It helps you to navigate to the first few commits of a project on GitHub.",
     keywords='github-helper',
     author='Zheng Zhou',
