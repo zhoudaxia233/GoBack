@@ -1,4 +1,5 @@
 import sys
+import argparse
 import requests
 from lxml import html
 
@@ -21,9 +22,15 @@ def get_page_num_of_the_very_first_commit(response):
 def _url_join(*args):
     return '/'.join(arg.strip('/') for arg in args)
 
+def init():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("url", help="url of the project on GitHub")
+    parser.add_argument("-b", "--branch", help="name of the branch you want to check", type=str, default='master')
+    args = parser.parse_args()
+    return (args.url, args.branch)
+
 def main():
-    branch = 'master'
-    url_raw = sys.argv[1]
+    url_raw, branch = init()
     url = _url_join(url_raw, 'tree', branch)
     r = requests.get(url)
 
