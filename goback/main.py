@@ -2,6 +2,7 @@ import sys
 import argparse
 import requests
 from lxml import html
+from . import __version__
 
 def get_num_of_commits(response): # param response: the return of requests.get() method
     tree = html.fromstring(response.content)
@@ -26,6 +27,7 @@ def init():
     parser = argparse.ArgumentParser()
     parser.add_argument("url", help="url of the project on GitHub")
     parser.add_argument("-b", "--branch", help="name of the branch you want to check", type=str, default='master')
+    parser.add_argument("-v", "--version", action='version', version='%(prog)s {}'.format(__version__))
     args = parser.parse_args()
     return (args.url, args.branch)
 
