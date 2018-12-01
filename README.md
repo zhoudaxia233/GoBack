@@ -24,6 +24,8 @@ goback LINK_OF_A_GITHUB_PROJECT -b NAME_OF_THE_BRANCH
 e.g.
 ```bash
 goback https://github.com/vuejs/vue
+# or you can omit the annoying https head
+goback github.com/vuejs/vue
 ```
 It returns a **url** which navigates to the first page of commits of Vue.js.
 > Note: by default, the url navigates to the first page of commits of the `master` branch.

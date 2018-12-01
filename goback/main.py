@@ -1,3 +1,4 @@
+import re
 import sys
 import argparse
 import requests
@@ -23,6 +24,18 @@ def get_page_num_of_the_very_first_commit(response):
 def _url_join(*args):
     return '/'.join(arg.strip('/') for arg in args)
 
+def _url_preprocess(url_raw):
+    pattern = r"(https://)?github\.com/(.+?)/(.*)"
+    regex = re.compile(pattern, re.IGNORECASE)
+    matches = regex.search(url_raw)
+    url_raw_new = None
+    if matches:
+        if not matches.group(1):
+            url_raw_new = r'https://' + matches.group(0)
+        else:
+            url_raw_new = url_raw
+    return url_raw_new
+
 def init():
     parser = argparse.ArgumentParser()
     parser.add_argument("url", help="url of the project on GitHub")
@@ -33,6 +46,10 @@ def init():
 
 def main():
     url_raw, branch = init()
+    url_raw = _url_preprocess(url_raw)
+    if not url_raw:
+        print("Please input a valid github project url!")
+        return
     url = _url_join(url_raw, 'tree', branch)
     r = requests.get(url)
 
