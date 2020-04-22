@@ -2,15 +2,18 @@ import os
 import sys
 import io
 import re
-import goback
+import platform
 from setuptools import setup
-
+import goback
 
 # "setup.py publish" shortcut.
 if sys.argv[-1] == 'publish':
-    os.system('python3 setup.py sdist')
+    os.system('python setup.py sdist')
     os.system('twine upload dist/*')
-    os.system('rm -rf dist goback.egg-info')
+    if platform.system() == 'Windows':
+        os.system('powershell rm –path dist, goback.egg-info –recurse –force')
+    else:
+        os.system('rm -rf dist goback.egg-info')
     sys.exit()
 
 setup(
