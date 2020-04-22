@@ -7,7 +7,7 @@ from . import __version__
 
 def get_num_of_commits(response): # param response: the return of requests.get() method
     tree = html.fromstring(response.content)
-    xpath_to_commits_num = '//*[@id="js-repo-pjax-container"]//div[@class="overall-summary overall-summary-bottomless"]//li[@class="commits"]//span[@class="num text-emphasized"]/text()'
+    xpath_to_commits_num = '//*[@id="js-repo-pjax-container"]//ul[@class="numbers-summary"]//li[@class="commits"]//span[@class="num text-emphasized"]/text()'
     res = tree.xpath(xpath_to_commits_num) # res is a list of results matching the xpath we specified
     num_of_commits = res[0].strip()
     num_of_commits = num_of_commits.replace(',', '') # to remove thousands separators in "num_of_commits"
